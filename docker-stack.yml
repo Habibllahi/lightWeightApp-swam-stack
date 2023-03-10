@@ -1,0 +1,26 @@
+# this file is meant for Docker Swarm stacks only
+# trying it in compose will fail because of multiple replicas trying to bind to the same port
+# Swarm currently does not support Compose Spec, so we'll pin to the older version 3.9
+
+version: "3.9"
+
+services:
+
+  discovery:
+    image: javabeanstack/light-weight-app-discovery:v1
+    networks:
+      - light-weight-app
+    ports:
+      - 8761:8761  
+    deploy:
+      replicas: 1
+    volumes:
+      - log:/lightWeightAppLog/discovery   
+      
+networks:
+  light-weight-app:
+    external: true
+
+volumes:
+  log:
+
